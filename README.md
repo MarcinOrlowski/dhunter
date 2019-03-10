@@ -1,5 +1,4 @@
  [![PyPI version](https://badge.fury.io/py/dhunter.svg)](https://badge.fury.io/py/dhunter)
-
  [![CodeFactor Code Rating](https://www.codefactor.io/repository/github/MarcinOrlowski/dhunter/badge?style=flat-square)](https://www.codefactor.io/repository/github/marcinorlowski/mp3voicestamp)
  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/db7e95272e1a44889920bded7620c8b3)](https://www.codacy.com/app/MarcinOrlowski/dhunter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MarcinOrlowski/dhunter&amp;utm_campaign=Badge_Grade)
  [![codebeat badge](https://codebeat.co/badges/1ff9f5ad-3e95-4ffb-94d1-08eb2f360987)](https://codebeat.co/projects/github-com-marcinorlowski-dhunter-master)
