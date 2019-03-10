@@ -34,6 +34,41 @@
  > NOTE: If you do not want any folder (i.e. subfolder) to be scanned, simply put empty
  > file named `.dhunterignore` and all files in that folder will be ignored. Subfolders
  > will be scanned though! 
+
+#### Filtering ####
+
+ Experience tells that there's no point to hash all the files found, because some, (i.e.
+ `.gitignore`) may have the same content intentionally and should not be considered 
+ duplicates and not all files are worth scanning (i.e. it's usually safe to ignore 
+ `.git` folder and its subfolders). Therefore `dscan` will apply some filters to decide
+ if given file or directory should be processed or not. 
+ 
+ The following criteria are applied to folders:
+ 
+  * directory is not a symbolic link to other location
+  * directory name is not blacklisted. Currently the following names are:
+    * .git
+    * .svn
+    * .cvs
+    * vendor
+
+ > NOTE: contrary to how `.dhunterignore` works, if directory name is on aboice black list
+ > then whole directory, including all subdirectories will be ignored.
+ 
+ The following criteria are applied to all files:
+  
+  * file is not a symbolic link to other file 
+  * files of 0 bytes length are always ignored
+  * for non-zero length files the following must be true: 
+    * file size is not smaller than 2048 (use `--min` to set own value)
+    * if `--max` option is given, file size must not be bigger than specified size
+  * file name is not blacklisted. Currently the following names are:
+    * .dhunter
+    * .dhunterignore
+    * .env
+    * .htaccess
+    * .htpasswd
+    * .gitignore
  
 ### Hunting ###
 
