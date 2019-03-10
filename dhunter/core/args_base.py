@@ -26,6 +26,24 @@ class ArgsBase(object):
 
         return parser
 
+    def _add_filter_option_group(self, parser: argparse.ArgumentParser) -> None:
+        group = parser.add_argument_group('Filters')
+        group.add_argument('-min', '--min',
+                           metavar='SIZE', action='store', dest='min_size', nargs=1, type=str,
+                           help='Min file size threshold. Files smaller than SIZE will be ignored. '
+                                'Supported format <VAL><UNIT> where val is positive integer, and '
+                                'unit is one letter (case insensitive): b for bytes, k for KiB, '
+                                'm for MiB, g for GiB and t for TiB. i.e. "1024" = "1024b" = "1k". '
+                                'Default value is {}.'.format(Const.FILE_FILTER_SIZE_MIN))
+        group.add_argument('-max', '--max',
+                           metavar='SIZE', action='store', dest='max_size', nargs=1, type=str,
+                           help='Max file size threshold. Files bigger than SIZE will be ignored. '
+                                'Supported format <VAL><UNIT> where val is positive integer, and '
+                                'unit is one letter (case insensitive): b for bytes, k for KiB, '
+                                'm for MiB, g for GiB and t for TiB. i.e. "1024" = "1024b" = "1k". '
+                                'Default value is {}. Zero means no max size limit.'.format(
+                                   Const.FILE_FILTER_SIZE_MAX))
+
     def _add_other_option_group(self, parser: argparse.ArgumentParser) -> None:
         group = parser.add_argument_group('Other')
         group.add_argument('-v', '-verbose', '--verbose',

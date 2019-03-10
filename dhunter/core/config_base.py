@@ -24,7 +24,7 @@ class ConfigBase(object):
         self.sort_by: str = None
         self.reverse_order: bool = False
         self.limit: int = 0
-        self.min_size: int = 0
+        self.min_size: int = 1024
         self.max_size: int = 0
         self.force_rehash: bool = False
         self.verbose: bool = False
