@@ -8,15 +8,26 @@
  
  [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
-dhunter
-=======
+
+## Table of contents ##
+
+ * [Introduction](#introduction)
+ * [Features](#features)
+ * [Configuration and usage](docs/usage.md)
+ * [Requirements and installation](docs/install.md)
+ * [Bugs reports and contributions](docs/contribute.md)
+ * [Credits and license](#credits-and-license)
+ * [What's new?](docs/CHANGES.md)
+
+## Introduction ##
+
  dhunter (pronounced The Hunter) is [d]uplicate [hunter] utility, designed
  to help scanning and processing large sets of files. Uses content based
  file duplicates matching and smart caching for faster directory scanning,
  data changes detection and processing.
 
-Features
-========
+## Features ##
+
  * Content based file matching
  * Designed to work with lot of data:
    * caches folder scaning results for quick reuse
@@ -26,26 +37,8 @@ Features
    * Ignores folders like `.git`, `.cvs`, `.svn`
    * Supports user configurable file size filter (min and/or max)
 
-Requirements
-============
- Requires Python 3.6 or newer.
 
-Installation
-============
- Use `pip` package manager to install `dhunter` on your machine:
- 
-    pip install dhunter
+## Credits and license ##
 
- If you want it install for current user only add `--user` flag to above.
-
- Once installed you should have `dscan` and `dhunt` available.
-
-Usage
-=====
- See detailed [usage examples](docs/usage.md).
-
-
-Credits and license
-===================
- * Written and copyrighted ©2018-2019 by Marcin Orlowski <mail (#) marcinorlowski (.) com>
+ * Written and copyrighted ©2018-2019 by Marcin Orlowski
  * dhunter is open-sourced software licensed under the MIT license
