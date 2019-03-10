@@ -14,7 +14,7 @@
 
  This will scan specified folders recursively and hash all the files found.
 
- > NOTE: if yo are scanning non read-only medium, then it is safe to abort the process
+ > ![Tip](img/tip-small.png) if yo are scanning non read-only medium, then it is safe to abort the process
  > at any time and restart later. It such case already hashed files will not be hashed
  > again. See [here](#read-only-folders) for closer details.
  
@@ -30,7 +30,7 @@
  If specified no file if selected folders is hashed yet, `dscan` will do that so you can
  safely run the above command even if you never hashed specified folders before. 
  
- > NOTE: If you do not want any folder (i.e. subfolder) to be scanned, simply put empty
+ > ![Tip](img/tip-small.png) If you do not want any folder (i.e. subfolder) to be scanned, simply put empty
  > file named `.dhunterignore` and all files in that folder will be ignored. Subfolders
  > will be scanned though! 
 
@@ -51,7 +51,7 @@
     * .cvs
     * vendor
 
- > NOTE: contrary to how `.dhunterignore` works, if directory name is on aboice black list
+ > ![Tip](img/tip-small.png) contrary to how `.dhunterignore` works, if directory name is on aboice black list
  > then whole directory, including all subdirectories will be ignored.
  
  The following criteria are applied to all files:
@@ -119,5 +119,5 @@
  
     dscan --db my-photos --read-only /disk1/pictures /disk2/photos
 
- > NOTE: when using `--read-only` flag you must specify project file to be created, because
- > without that the whole scanning make no sense.  
+ > ![Tip](img/tip-small.png) when using `--read-only` flag you must specify project file to be created, because
+ > without that the whole scanning would produce no re-usable output thus making it completely pointless.
