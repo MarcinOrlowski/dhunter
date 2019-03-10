@@ -1,9 +1,9 @@
-Requirements
-============
+## Requirements ##
+
  dhunter requires Python 3.6 or newer.
 
-Installation
-============
+## Installation ##
+
  Use `pip` package manager to install `dhunter` on your machine:
  
     pip install dhunter
