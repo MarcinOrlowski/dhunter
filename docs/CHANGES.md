@@ -1,7 +1,7 @@
 ## Changelog ##
 
-@dev
-----
+v1.1.0 (2019-03-10)
+-------------------
  * By default files smaller than 2048 bytes are ignored (use `--min` to override).
  * Updated usage documentation to cover filtering, scanning and read-only media
 
