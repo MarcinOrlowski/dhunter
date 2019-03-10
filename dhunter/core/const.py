@@ -31,6 +31,9 @@ class Const(object):
     FILE_DOT_DHUNTER: str = '.dhunter'
     FILE_DOT_IGNORE: str = '.dhunterignore'
 
+    FILE_FILTER_SIZE_MIN = 2048
+    FILE_FILTER_SIZE_MAX = 0
+
     ALLOWED_SORT_VALUES: List[str] = [
         's',
         'size',

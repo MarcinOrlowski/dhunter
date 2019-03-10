@@ -35,22 +35,6 @@ class Args(ArgsBase):
                 metavar='DIR', action='store', dest='src_dirs', nargs='+',
                 help='Directories to scan and include in the project file.')
 
-        group = parser.add_argument_group('Filters')
-        group.add_argument('-min', '--min',
-                           metavar='SIZE', action='store', dest='min_size', nargs=1, type=str,
-                           help='Min file size threshold. Files smaller than SIZE will be ignored. '
-                                'Supported format <VAL><UNIT> where val is positive integer, and '
-                                'unit is one letter (case insensitive): b for bytes, k for KiB, '
-                                'm for MiB, g for GiB and t for TiB. i.e. "1024" = "1024b" = "1k". '
-                                'Default is 0, which means no limits.')
-        group.add_argument('-max', '--max',
-                           metavar='SIZE', action='store', dest='max_size', nargs=1, type=str,
-                           help='Max file size threshold. Files bigger than SIZE will be ignored. '
-                                'Supported format <VAL><UNIT> where val is positive integer, and '
-                                'unit is one letter (case insensitive): b for bytes, k for KiB, '
-                                'm for MiB, g for GiB and t for TiB. i.e. "1024" = "1024b" = "1k". '
-                                'Default is 0, which means no limits.')
-
         group = parser.add_argument_group('Misc')
         group.add_argument('-r', '-rehash', '--rehash',
                            action='store_true', dest='force_rehash',
@@ -61,6 +45,8 @@ class Args(ArgsBase):
                            help='Tells the scanner to treat all the folders as read only and do not '
                                 'write cache file ({dot})'.format(dot=Const.FILE_DOT_DHUNTER)
                            )
+
+        self._add_filter_option_group(parser)
 
         self._add_other_option_group(parser)
 
