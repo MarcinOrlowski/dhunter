@@ -117,7 +117,6 @@ class Filter(object):
             return False
 
         for list_item in self._dir_name_blacklist:
-            import re
             match = re.match(list_item, path)
             if match is not None:
                 Log.vv('{path}: blacklisted by "{re}" rule. Skipping.'.format(path=path, re=list_item), not no_log)
