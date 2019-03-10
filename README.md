@@ -31,10 +31,11 @@
  * Designed to work with lot of data:
    * caches folder scaning results for quick reuse
    * directory scanning can be aborted and **resumed** at any moment
- * Smart content filters:
-   * Ignores zero length files
+ * Smart content filters
+   * Ignores zero length files and symlinks
    * Ignores folders like `.git`, `.cvs`, `.svn`
-   * Supports user configurable file size filter (min and/or max)
+   * Supports file size based (min and/or max) filtering
+   * Per folder exlusion via `.dhunterignore` file
 
 ## Credits and license ##
 
