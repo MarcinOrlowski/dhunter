@@ -1,4 +1,4 @@
- [![dhunter logo](../img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
+ [![dhunter logo](img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
  ---
 
 ## Requirements ##

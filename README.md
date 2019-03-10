@@ -1,4 +1,4 @@
- [![dhunter logo](img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
+ [![dhunter logo](docs/img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
  ---
 
  [![PyPI version](https://badge.fury.io/py/dhunter.svg)](https://badge.fury.io/py/dhunter)
