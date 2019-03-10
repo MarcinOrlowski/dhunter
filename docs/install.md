@@ -1,3 +1,6 @@
+ [![dhunter logo](../img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
+ ---
+
 ## Requirements ##
 
  dhunter requires Python 3.6 or newer.

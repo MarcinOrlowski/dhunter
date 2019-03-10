@@ -1,11 +1,6 @@
-## Scanning ##
+ [![dhunter logo](../img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
+ ---
 
- To hunt for duplicated files `dhunter` needs to scan your folders of your interest first. You can
- scan them all at once,  or scan them "in portions" - it does not make much difference as during
- the whole scanning and hashing process all the information about each directory is stored separately.
- When you try to scan folders again, `dhunter` will first try to reuse cached data (updating them if
- changed) which should speed the whole process up a lot. 
- 
 ## Usage example ##
 
  One example is better than thousands words, so let's assume we got two folders, say 
@@ -18,6 +13,10 @@
     dscan /disk1/pictures /disk2/photos
 
  This will scan specified folders recursively and hash all the files found.
+
+ > NOTE: if yo are scanning non read-only medium, then it is safe to abort the process
+ > at any time and restart later. It such case already hashed files will not be hashed
+ > again. See [here](#read-only-folders) for closer details.
  
  Once we got folders scanned we need to create project file. Technically speaking, project
  file is a database that will contain information about all the folders we want to 
@@ -113,10 +112,12 @@
 
 ## Read-only folders ##
 
- If you want to scan read-only medium (like DVD ROM) or do not want `.dhunter` files to be created
- during scanning, use `--read-only` flag while invoking `dscan`, i.e.:
+ `dscan` creates dotfile `.dhunter` in each folder it hash at least one file. This allows
+ easy resume of folder scanning if it was aborted for any reason, however if you want to
+ scan read-only medium (like DVD ROM) (or do not want `.dhunter` files to be created at
+ all), you need to use `--read-only` flag while invoking `dscan`, i.e.:
  
     dscan --db my-photos --read-only /disk1/pictures /disk2/photos
 
- NOTE: when using `--read-only` flag you must specify project file to be created, because without
- that the whole scanning make no sense.  
+ > NOTE: when using `--read-only` flag you must specify project file to be created, because
+ > without that the whole scanning make no sense.  
