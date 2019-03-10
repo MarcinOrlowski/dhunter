@@ -51,8 +51,8 @@
     * .cvs
     * vendor
 
- > ![Tip](img/tip-small.png) contrary to how `.dhunterignore` works, if directory name is on aboice black list
- > then whole directory, including all subdirectories will be ignored.
+ > ![Tip](img/tip-small.png) contrary to how `.dhunterignore` works, if directory name is on a black list
+ > then it be ignored as whole, including all the subdirectories.
  
  The following criteria are applied to all files:
   
