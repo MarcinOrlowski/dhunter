@@ -1,0 +1,10 @@
+*.swp
+*.pyc
+*~
+/.idea/
+/venv/
+/test*/
+/*.sqlite
+/dist/
+/build/
+/dhunter.egg-info/
