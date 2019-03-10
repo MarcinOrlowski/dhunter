@@ -1,3 +1,6 @@
+ [![dhunter logo](../img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
+ ---
+
 ## Changelog ##
 
 v1.1.0 (2019-03-10)

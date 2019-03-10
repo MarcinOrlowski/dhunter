@@ -1,3 +1,6 @@
+ [![dhunter logo](../img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
+ ---
+
 ## Usage example ##
 
  One example is better than thousands words, so let's assume we got two folders, say 

@@ -1,3 +1,6 @@
+ [![dhunter logo](../img/logo.png)](https://github.com/MarcinOrlowski/dhunter)
+ ---
+
 ## Contribution ##
 
  * [Bugs reports](#bug-reports)
