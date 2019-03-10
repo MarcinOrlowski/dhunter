@@ -12,7 +12,7 @@
 
  * [Introduction](#introduction)
  * [Features](#features)
- * [Configuration and usage](docs/usage.md)
+ * [Usage example](docs/usage.md)
  * [Requirements and installation](docs/install.md)
  * [Bugs reports and contributions](docs/contribute.md)
  * [Credits and license](#credits-and-license)
