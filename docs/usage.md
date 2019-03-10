@@ -5,7 +5,11 @@
 
  One example is better than thousands words, so let's assume we got two folders, say 
  `/disk1/pictures` and `/disk2/photos` we want to deduplicate.
-
+ 
+ Both tools, `dscan` and `dhunt` are part of `dhunter` package. Once you have the
+ package [install](install.md), you should have then in your path, available directly
+ from your command line or shell.
+ 
 ### Scanning ###
  
  First step is to scan these folders. The simplest way is to use `dscan` like this:
@@ -14,7 +18,7 @@
 
  This will scan specified folders recursively and hash all the files found.
 
- > ![Tip](img/tip-small.png) if yo are scanning non read-only medium, then it is safe to abort the process
+ > ![Tip](img/tip-small.png) If you are scanning non read-only medium, then it is safe to abort the process
  > at any time and restart later. It such case already hashed files will not be hashed
  > again. See [here](#read-only-folders) for closer details.
  
