@@ -71,7 +71,6 @@ class Config(ConfigBase):
             elif not os.path.isdir(os.path.abspath(single_dir)):
                 Log.abort('Path "{dir}" is not a folder'.format(dir=single_dir))
 
-        config.sort_by = config.sort_by
         if config.sort_by is None:
             config.sort_by = 'size'
         else:
