@@ -33,18 +33,25 @@
 
  If specified no file if selected folders is hashed yet, `dscan` will do that so you can
  safely run the above command even if you never hashed specified folders before. 
- 
- > ![Tip](img/tip-small.png) If you do not want any folder (i.e. subfolder) to be scanned, simply put empty
- > file named `.dhunterignore` and all files in that folder will be ignored. Subfolders
- > will be scanned though! 
 
+ > ![Tip](img/tip-small.png) It a good idea to create your project file on **different
+ > disk** that the one you are scanning (assumign you have more than one drive). This
+ > makes noticeable difference if you need to scan huge number, like thousands, of files.
+ > Also you want to do that if you scan files located on mechanical drive like HDD.
+ > If you store project file on the same disk then the scanning process will be
+ > slowed down by the updates of project file.
+ 
 #### Filtering ####
 
  Experience tells that there's no point to hash all the files found, because some, (i.e.
  `.gitignore`) may have the same content intentionally and should not be considered 
  duplicates and not all files are worth scanning (i.e. it's usually safe to ignore 
  `.git` folder and its subfolders). Therefore `dscan` will apply some filters to decide
- if given file or directory should be processed or not. 
+ if given file or directory should be processed or not.
+ 
+ > ![Tip](img/tip-small.png) If you do not want given folder to be scanned, 
+ > simply put empty file named `.dhunterignore` and the whole folder and its subfolders
+ > will be ignored.
  
  The following criteria are applied to folders:
  
@@ -55,9 +62,6 @@
     * .cvs
     * vendor
 
- > ![Tip](img/tip-small.png) contrary to how `.dhunterignore` works, if directory name is on a black list
- > then it be ignored as whole, including all the subdirectories.
- 
  The following criteria are applied to all files:
   
   * file is not a symbolic link to other file 
@@ -94,8 +98,8 @@
 
  listing size of the single file (`2.9 GiB`), number of duplicates and total size occupied by the duplicates (`5.8GiB`),
  and then list all the files with the same content incl. its location. 
- 
-## Cache files ##
+
+### Cache files ###
 
  If there's at least one file in the folder worth hashing, `dscan` will do that and store 
  the result hash in cache file named `.dhunter`. Next time the same folder is scanned, it
@@ -112,7 +116,14 @@
  changed since list scan.
  
  If you add or remove or alter any file in already scanned folder, run `dscan` again
- and it will update dotfile and hash only new or altered files. 
+ and it will update dotfile and hash only new or altered files.
+
+ > ![Tip](img/tip-small.png) To remove alal the `.dhunter` files from your disk
+ > use any file search utility or, if you have this supported on your platform,
+ > use `find` to get that done for you:
+ > 
+ > `find <PATH> -type f -name .dhunter -exec rm -f "{}" \;`
+ 
 
 ## Read-only folders ##
 
