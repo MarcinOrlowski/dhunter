@@ -82,12 +82,10 @@
  Duplicate hunting is handled by `dhunt` tool and all you need to hand it is project file
  and searching criteria. Say you want to see top 10 of duplicates that waste most space:
  
-    dhunt --limit 10 --sort size --reverse my-project
- 
- or in short notation:
- 
-    dhunt -l 10 -s s -r my-project
+    dhunt my-project
 
+ > ![Tip](img/tip-small.png) See `dhunt --help` for all available options.
+ 
  which would produce output like:
 
      1: size: 2.9 GiB, duplicates: 2, wasted: 5.8 GiB
