@@ -122,7 +122,7 @@ class Filter(object):
                 Log.vv('{path}: blacklisted by "{re}" rule. Skipping.'.format(path=path, re=list_item), not no_log)
                 return False
 
-        # if there's Const.FILE_DOT_IGNORE file present in the folder we completely skip.
+        # if there's dot ignore file present in the folder we completely skip.
         ignore_dot_file = os.path.join(path, Const.FILE_DOT_IGNORE)
         if os.path.exists(ignore_dot_file) and os.path.isfile(ignore_dot_file):
             Log.vv('{name}: Found {dotfile} file in. Skipping.'.format(name=path, dotfile=Const.FILE_DOT_IGNORE),

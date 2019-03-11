@@ -42,6 +42,7 @@ class Args(ArgsBase):
                            help='Limit number of shown results to given count. '
                                 'Default is 0, which means no limits.')
 
+        self._add_filter_option_group(parser)
         self._add_other_option_group(parser)
 
         # this trick is to enforce stacktrace in case parse_args() fail (which should normally not happen)

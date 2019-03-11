@@ -143,8 +143,6 @@ class Hunter(object):
 
             # if self.config.duplicates:
             self.show_duplicates(self.config.limit, self.config.sort_by, self.config.reverse_order)
-            # elif self.config.cmd_stats:
-            #     self.show_stats()
 
         except (ValueError, IOError) as ex:
             if not self.config.debug:
