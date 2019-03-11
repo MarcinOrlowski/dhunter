@@ -120,17 +120,19 @@ class Hunter(object):
                     stats_duplicates_bytes_total += total_duplicates_size
 
                     Log.level_push('{idx:2d}: size: {size:s}, duplicates: {dupes:d}, wasted: {wasted:s}'.format(
-                            idx=file_hash_idx, size=Util.size_to_str(row['size']),
-                            dupes=duplicate_count, wasted=Util.size_to_str(total_duplicates_size)),
-                    )
+                            idx=file_hash_idx,
+                            size=Util.size_to_str(row['size']),
+                            dupes=duplicate_count,
+                            wasted=Util.size_to_str(total_duplicates_size)))
                     group_header_shown = True
 
                 Log.i('{idx:2d}: {path}'.format(idx=idx, path=os.path.join(row['path'], row['name'])))
 
             Log.level_pop()
 
+        Log.i(' ')
         Log.level_push('Summary')
-        fmt = '{files_cnt:d} files has {dupes_cnt:d} duplicates, wasting {size:s}.'
+        fmt = '{files_cnt:d} files have {dupes_cnt:d} duplicates, wasting together {size:s}.'
         Log.i(fmt.format(files_cnt=len(dupli_hashes), dupes_cnt=stats_duplicates_total_count,
                          size=Util.size_to_str(stats_duplicates_bytes_total)))
         Log.level_pop()

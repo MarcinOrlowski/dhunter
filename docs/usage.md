@@ -80,12 +80,14 @@
 ### Hunting ###
 
  Duplicate hunting is handled by `dhunt` tool and all you need to hand it is project file
- and searching criteria. Say you want to see top 10 of duplicates that waste most space:
+ and searching criteria.
+ 
+#### Hunt by size ####
+
+ Say you want to see top 10 of duplicates that waste most space:
  
     dhunt my-project
 
- > ![Tip](img/tip-small.png) See `dhunt --help` for all available options.
- 
  which would produce output like:
 
      1: size: 2.9 GiB, duplicates: 2, wasted: 5.8 GiB
@@ -93,9 +95,25 @@
        2: /disk2/photos/system_image.emmc.win
        3: /disk1/BACK/USB2/other-name.ddd
        ...
+       
+     Summary:
+       5 files have 7 duplicates, wasting together 17.6 GiB
 
- listing size of the single file (`2.9 GiB`), number of duplicates and total size occupied by the duplicates (`5.8GiB`),
- and then list all the files with the same content incl. its location. 
+ listing size of the "base" single file (`2.9 GiB`), number of duplicates and total size occupied by all its
+ duplicates (`5.8GiB`), and then list all the files with the same content incl. its location. List is concluded
+ by report summary.
+
+#### Hunt by duplicate count ####
+ 
+ To list top 10 of files with highest count of duplicates:
+ 
+    dhunt --sort count my-project
+
+ or in short form:
+ 
+    dhunt --s c my-project
+
+ > ![Tip](img/tip-small.png) See `dhunt --help` for all available options.
 
 ### Cache files ###
 
