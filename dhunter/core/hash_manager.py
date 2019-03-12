@@ -254,8 +254,7 @@ class HashManager(object):
             else:
                 raise RuntimeError('Unknown sorting type: %r' % sort_by)
 
-            if sort_desc:
-                sql += ' DESC '
+            sql += ' ASC ' if sort_desc else ' DESC '
 
         if limit is not None and limit > 0:
             sql += ' LIMIT {}'.format(limit)

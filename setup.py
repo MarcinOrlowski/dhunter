@@ -37,7 +37,7 @@ setup(
         description="The hunter - fast and easy file duplicate finder utility.",
         long_description=readme,
         long_description_content_type="text/markdown",
-        url='https://github.com/MarcinOrlowski/duplicate-hunter',
+        url='https://github.com/MarcinOrlowski/dhunter',
         keywords="file duplicates deduplicate",
         project_urls={
             "Bug Tracker": "https://github.com/MarcinOrlowski/dhunter/issues",

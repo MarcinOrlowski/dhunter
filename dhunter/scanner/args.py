@@ -47,7 +47,6 @@ class Args(ArgsBase):
                            )
 
         self._add_filter_option_group(parser)
-
         self._add_other_option_group(parser)
 
         # this trick is to enforce stacktrace in case parse_args() fail (which should normally not happen)

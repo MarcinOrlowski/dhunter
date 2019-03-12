@@ -79,8 +79,12 @@ class Hunter(object):
 
     # ------------------------------------------------------------------------------------------------------------
 
-    def show_duplicates(self, limit: int = 0, sort_by: str = 'size', reverse_order: bool = False) -> None:
+    def show_duplicates(self, config: ConfigBase) -> None:
         hm = HashManager.get_instance()
+
+        limit: int = config.limit
+        sort_by: str = config.sort_by
+        reverse_order: bool = config.reverse_order
 
         # get all files with non unique hashes (at least 2 counts)
         dupli_hashes = hm.get_hashes_by_count_threshold(2, limit, sort_by, reverse_order)
@@ -95,9 +99,15 @@ class Hunter(object):
         stats_duplicates_bytes_total = 0
 
         cursor = hm.db.cursor()
-        query = 'SELECT * FROM `files` WHERE `hash` = ? ORDER BY `path`,`name` '
+        query = 'SELECT * FROM `files` WHERE `hash` = ? AND `size` >= ?'
+        if config.max_size > 0:
+            query += ' AND `size` <= ? '
+        query += 'ORDER BY `path`,`name`'
         for file_hash_idx, file_hash in enumerate(dupli_hashes, start=1):
-            cursor.execute(query, (file_hash,))
+            if config.max_size > 0:
+                cursor.execute(query, (file_hash, config.min_size, config.max_size))
+            else:
+                cursor.execute(query, (file_hash, config.min_size))
 
             group_header_shown = False
             dupli_rows = cursor.fetchall()
@@ -110,17 +120,19 @@ class Hunter(object):
                     stats_duplicates_bytes_total += total_duplicates_size
 
                     Log.level_push('{idx:2d}: size: {size:s}, duplicates: {dupes:d}, wasted: {wasted:s}'.format(
-                            idx=file_hash_idx, size=Util.size_to_str(row['size']),
-                            dupes=duplicate_count, wasted=Util.size_to_str(total_duplicates_size)),
-                    )
+                            idx=file_hash_idx,
+                            size=Util.size_to_str(row['size']),
+                            dupes=duplicate_count,
+                            wasted=Util.size_to_str(total_duplicates_size)))
                     group_header_shown = True
 
                 Log.i('{idx:2d}: {path}'.format(idx=idx, path=os.path.join(row['path'], row['name'])))
 
             Log.level_pop()
 
+        Log.i(' ')
         Log.level_push('Summary')
-        fmt = '{files_cnt:d} files has {dupes_cnt:d} duplicates, wasting {size:s}.'
+        fmt = '{files_cnt:d} files have {dupes_cnt:d} duplicates, wasting together {size:s}.'
         Log.i(fmt.format(files_cnt=len(dupli_hashes), dupes_cnt=stats_duplicates_total_count,
                          size=Util.size_to_str(stats_duplicates_bytes_total)))
         Log.level_pop()
@@ -142,9 +154,7 @@ class Hunter(object):
             HashManager.get_instance(self.config.db_file, self.config)
 
             # if self.config.duplicates:
-            self.show_duplicates(self.config.limit, self.config.sort_by, self.config.reverse_order)
-            # elif self.config.cmd_stats:
-            #     self.show_stats()
+            self.show_duplicates(self.config)
 
         except (ValueError, IOError) as ex:
             if not self.config.debug:
