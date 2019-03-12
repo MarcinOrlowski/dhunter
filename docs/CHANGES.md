@@ -3,6 +3,12 @@
 
 ## Changelog ##
 
+v1.2.0 (2019-03-11)
+-------------------
+ * Added project logo
+ * `dhunt` now supports size `--min` and `--max` arguments.
+ * Updated documentation and usage examples 
+
 v1.1.0 (2019-03-10)
 -------------------
  * By default files smaller than 2048 bytes are ignored (use `--min` to override).
