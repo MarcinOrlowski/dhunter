@@ -17,7 +17,7 @@ from typing import List
 class Const(object):
     APP_NAME: str = 'dhunter'
     APP_URL: str = 'https://github.com/MarcinOrlowski/dhunter'
-    APP_VERSION: str = '1.1.0'
+    APP_VERSION: str = '1.2.0'
 
     FIELD_TYPE: str = '_type'
     FIELD_VERSION: str = '_version'
