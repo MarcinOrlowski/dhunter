@@ -3,7 +3,7 @@
 
 ## Requirements ##
 
- dhunter requires [Python](www.python.org) interpreter installd in your system in
+ dhunter requires [Python](http://www.python.org/) interpreter installd in your system in
  version 3.6 or newer.
 
 ## Virtual environment ##
