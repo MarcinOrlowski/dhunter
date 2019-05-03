@@ -171,6 +171,4 @@ class Hunter(object):
         """Application entry point.
         """
         Util.validate_env()
-
-        app = Hunter()
-        return app.main()
+        return Hunter().main()
