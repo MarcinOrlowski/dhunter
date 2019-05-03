@@ -129,7 +129,8 @@ class FileHashCache(HashBase):
                         self.add(filehash)
                     else:
                         from .log import Log
-                        Log.w('Not found: {}'.format(self._path))
+                        Log.w('File no longer exists: {}'.format(os.path.join(self._path, filehash.name)))
+                        dirty = True
 
         self._dirty = dirty
 

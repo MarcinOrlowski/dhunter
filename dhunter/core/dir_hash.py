@@ -33,6 +33,7 @@ class DirHash(HashBase):
 
         if load_cache_file:
             self._file_hash_cache.load()
+            self._file_hash_cache.save()
 
         from .hash_manager import HashManager
         self._hash_manager: HashManager = HashManager.get_instance()

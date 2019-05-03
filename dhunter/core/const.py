@@ -40,3 +40,11 @@ class Const(object):
         'c',
         'count',
     ]
+
+    CMD_SCAN = 'scan'
+    CMD_CHECK = 'check'
+
+    SCANNER_CMDS = [
+        CMD_SCAN,
+        CMD_CHECK,
+    ]
