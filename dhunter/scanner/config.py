@@ -14,6 +14,7 @@
 import os
 from argparse import Namespace
 
+from dhunter.core.const import Const
 from ..core.config_base import ConfigBase
 from ..util.overrides_decorator import overrides
 
@@ -38,6 +39,7 @@ class Config(ConfigBase):
             'debug',
             'debug_verbose',
             'dont_save_dot_file',
+            'command'
         ]
         for key in _keys:
             config.__setattr__(key, getattr(args, key))
@@ -50,6 +52,22 @@ class Config(ConfigBase):
         config.db_file = None if config.db_file is None else config.db_file[0]
         if config.db_file is not None and os.path.exists(config.db_file):
             Log.abort('Project file already exists.')
+
+        if config.command is not None:
+            config.command = config.command
+
+            if config.command not in Const.SCANNER_CMDS:
+                Log.abort('Unknown command: %r' % config.command)
+
+            if config.command == Const.CMD_SCAN:
+                if config.db_file is None:
+                    Log.abort('Command %r requires file name for project file to create.' % config.command)
+                elif os.path.exists(config.db_file):
+                    Log.abort('File already exists: %s' % config.db_file)
+
+            elif config.command == Const.CMD_CHECK:
+                if config.db_file is None:
+                    Log.abort('Command %r requires existing project file.')
 
         # Let's check if all paths to scan are in fact valid and existing folders
         for single_dir in config.src_dirs:
