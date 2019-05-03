@@ -19,9 +19,11 @@ from typing import List
 class ConfigBase(object):
 
     def __init__(self):
+        from .filter import Filter
+
         self.src_dirs: List[str] = []
         self.db_file: str or None = None
-        self.sort_by: str = None
+        self.sort_by: str or None = None
         self.reverse_order: bool = False
         self.limit: int = 0
         self.min_size: int = 1024
@@ -30,8 +32,9 @@ class ConfigBase(object):
         self.verbose: bool = False
         self.debug: bool = False
         self.debug_verbose: bool = False
-        self.filter = None
-        self.dont_save_dot_file = False
+        self.filter: Filter or None = None
+        self.dont_save_dot_file: bool = False
+        self.command: str or None = None
 
     @staticmethod
     @abstractmethod

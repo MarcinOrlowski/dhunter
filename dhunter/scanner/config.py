@@ -39,7 +39,7 @@ class Config(ConfigBase):
             'debug',
             'debug_verbose',
             'dont_save_dot_file',
-            'command'
+            'command',
         ]
         for key in _keys:
             config.__setattr__(key, getattr(args, key))
