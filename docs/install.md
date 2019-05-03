@@ -13,7 +13,7 @@
  dependencies isolated from other python packages or tools you may have installed
  which let you avoid, sometimes unsolvable dependency conflicts.
  
- If you are unfamiliar with virtual enviroments please see tons of tutorials on-line,
+ If you are unfamiliar with virtual environments please see tons of tutorials on-line,
  like [Python Virtual Environments in Five Minutes](https://chriswarrick.com/blog/2018/09/04/python-virtual-environments/).
  
 ## Installation ##
