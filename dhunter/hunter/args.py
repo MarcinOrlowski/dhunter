@@ -20,6 +20,9 @@ from ..core.const import Const
 class Args(ArgsBase):
     """Handles command line arguments"""
 
+    def _get_cmd_name(self):
+        return 'dhunt'
+
     # noinspection PyTypeChecker
     def parse_args(self) -> argparse.Namespace:
         """Parses command line arguments
@@ -27,8 +30,8 @@ class Args(ArgsBase):
         parser = self._get_parser()
 
         group = parser.add_argument_group('Project')
-        group.add_argument(metavar='FILE', action='store', dest='db_file', nargs=1,
-                           help='Name of project file to process.')
+        group.add_argument(metavar='DB_FILE', action='store', dest='db_file', nargs=1,
+                           help='Name of project database file to process.')
 
         group = parser.add_argument_group('Sorting and results limit')
         group.add_argument('-s', '-sort', '--sort',

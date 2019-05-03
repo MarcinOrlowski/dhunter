@@ -17,9 +17,12 @@ from .const import Const
 
 class ArgsBase(object):
 
+    def _get_cmd_name(self):
+        return Const.APP_NAME.lower()
+
     def _get_parser(self) -> argparse.ArgumentParser:
         parser = argparse.ArgumentParser(
-                prog=Const.APP_NAME.lower(),
+                prog=self._get_cmd_name(),
                 description='{app} v{v}\n'.format(app=Const.APP_NAME, v=Const.APP_VERSION) +
                             'Written by Marcin Orlowski, See ' + Const.APP_URL,
                 formatter_class=argparse.RawDescriptionHelpFormatter)
