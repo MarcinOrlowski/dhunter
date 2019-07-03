@@ -17,12 +17,19 @@ from .const import Const
 
 class ArgsBase(object):
 
-    def _get_cmd_name(self):
+    def _get_tool_name(self) -> str:
+        """
+        Returns name of invoked utility. This string is only used when help
+        string is going to be shown, so it mention the right name of package tool
+        handling these options.
+
+        :return:
+        """
         return Const.APP_NAME.lower()
 
     def _get_parser(self) -> argparse.ArgumentParser:
         parser = argparse.ArgumentParser(
-                prog=self._get_cmd_name(),
+                prog=self._get_tool_name(),
                 description='{app} v{v}\n'.format(app=Const.APP_NAME, v=Const.APP_VERSION) +
                             'Written by Marcin Orlowski, See ' + Const.APP_URL,
                 formatter_class=argparse.RawDescriptionHelpFormatter)

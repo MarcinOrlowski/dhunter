@@ -20,7 +20,7 @@ from ..core.const import Const
 class Args(ArgsBase):
     """Handles command line arguments"""
 
-    def _get_cmd_name(self):
+    def _get_tool_name(self) -> str:
         return 'dscan'
 
     # noinspection PyTypeChecker
