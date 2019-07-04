@@ -3,6 +3,10 @@
 
 ## Changelog ##
 
+dev
+---
+ * Now uses full absolute path for each item strored in project db file
+
 v1.2.0 (2019-03-11)
 -------------------
  * Added project logo

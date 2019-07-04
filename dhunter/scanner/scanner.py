@@ -12,6 +12,7 @@
 """
 
 import datetime
+import os
 
 from .args import Args
 from .config import Config
@@ -69,6 +70,11 @@ class Scanner(object):
         for path in self.config.src_dirs:
             if not self.config.filter.validate_dir(path):
                 continue
+
+            # we need to work on full paths otherwise hash database
+            # would be completely useless w/o knowing starting directory
+            # or while scanning more than one DIRs
+            path = os.path.abspath(path)
 
             dir_hash = hm.get_dirhash_for_path(path)
             dir_hash.scan_dir()
