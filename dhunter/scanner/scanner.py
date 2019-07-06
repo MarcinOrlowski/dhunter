@@ -68,7 +68,7 @@ class Scanner(object):
 
         Log.d('Scanning source dirs')
         for path in self.config.src_dirs:
-            if not self.config.filter.validate_dir(path):
+            if not self.config.filter.validate_dir(path, warn_on_symlink=True):
                 continue
 
             # we need to work on full paths otherwise hash database

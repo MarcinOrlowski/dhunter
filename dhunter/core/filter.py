@@ -102,24 +102,28 @@ class Filter(object):
 
         return True
 
-    def validate_dir(self, path: str, no_log: bool = False) -> bool:
+    def validate_dir(self, path: str, no_log: bool = False, warn_on_symlink=False) -> bool:
         """Validates given path. Returns False if entry should be completely ignored,
         or True if keep it for further processing."""
 
         from .log import Log
 
         if os.path.islink(path):
-            Log.vv('{path}: It is the symbolic link. Skipping.'.format(path=path), not no_log)
+            msg = '{path} is a symbolic link. Skipping.'.format(path=path)
+            if warn_on_symlink:
+                Log.w(msg, not no_log)
+            else:
+                Log.vv(msg, not no_log)
             return False
 
         if not os.path.isdir(path):
-            Log.vv('{path}: Not a directory. Skipping.'.format(path=path), not no_log)
+            Log.vv('{path} is not a directory. Skipping.'.format(path=path), not no_log)
             return False
 
         for list_item in self._dir_name_blacklist:
             match = re.match(list_item, path)
             if match is not None:
-                Log.vv('{path}: blacklisted by "{re}" rule. Skipping.'.format(path=path, re=list_item), not no_log)
+                Log.vv('{path} is blacklisted by "{re}" rule. Skipping.'.format(path=path, re=list_item), not no_log)
                 return False
 
         # if there's dot ignore file present in the folder we completely skip.
