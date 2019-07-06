@@ -40,6 +40,7 @@ class Config(ConfigBase):
             'debug_verbose',
             'dont_save_dot_file',
             'command',
+            'force',
         ]
         for key in _keys:
             config.__setattr__(key, getattr(args, key))
@@ -51,7 +52,10 @@ class Config(ConfigBase):
 
         config.db_file = None if config.db_file is None else config.db_file[0]
         if config.db_file is not None and os.path.exists(config.db_file):
-            Log.abort('Project file already exists.')
+            if not config.force:
+                Log.abort('Project file already exists.')
+            else:
+                os.unlink(config.db_file)
 
         if config.command is not None:
             config.command = config.command

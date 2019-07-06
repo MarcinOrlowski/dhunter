@@ -9,6 +9,7 @@ dev
  * dhunter: automatically removes dead entries from used DB if they hit the filter
  * dhunter: added `--clean-db` option to remove dead entries from project DB
  * dhunter: now yields proper warning when source dir is a symlink
+ * dscan: now supports `--force` to overwrite existing database file
 
 v1.2.0 (2019-03-11)
 -------------------
