@@ -163,12 +163,10 @@ class DirHash(HashBase):
 
             # we have some names left untouched from last cache read. Most likely these files no longer exist
             for file_name in current_cached_names:
-                Log.level_push(file_name)
                 if not (os.path.exists(file_name) and os.path.isfile(file_name)):
                     self._file_hash_cache.remove(file_name)
                 else:
                     Log.e('Zombie file detected: "{name}"'.format(name=file_name))
-                Log.level_pop()
 
             # save directory cache into file and DB
             self.save_cache()

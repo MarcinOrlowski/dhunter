@@ -99,7 +99,7 @@ class Hunter(object):
         stats_duplicates_bytes_total = 0
 
         cursor = hm.db.cursor()
-        query = 'SELECT * FROM `files` WHERE `hash` = ? AND `size` >= ?'
+        query = 'SELECT ROWID, * FROM `files` WHERE `hash` = ? AND `size` >= ?'
         if config.max_size > 0:
             query += ' AND `size` <= ? '
         query += 'ORDER BY `path`,`name`'
@@ -126,7 +126,16 @@ class Hunter(object):
                             wasted=Util.size_to_str(total_duplicates_size)))
                     group_header_shown = True
 
-                Log.i('{idx:2d}: {path}'.format(idx=idx, path=os.path.join(row['path'], row['name'])))
+                full_path = os.path.join(row['path'], row['name'])
+                log_msg = '{idx:2d}: {path}'.format(idx=idx, path=full_path)
+
+                # check if this file still exists and update DB if not
+                if not os.path.exists(full_path):
+                    cursor = hm.db.cursor()
+                    cursor.execute('DELETE FROM `files` WHERE `ROWID`=?', (row['ROWID'],))
+                    Log.e(log_msg, prefix='')
+                else:
+                    Log.i(log_msg)
 
             Log.level_pop()
 

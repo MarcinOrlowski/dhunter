@@ -237,10 +237,10 @@ class Log(object):
 
     # error
     @staticmethod
-    def e(messages=None, condition=True):
+    def e(messages=None, condition=True, prefix='*** '):
         if condition and messages is not None:
             messages = Log._to_list(messages)
-            _ = [Log._log('*** ' + Log.strip_ansi(message), Log.COLOR_ERROR, True) for message in messages]
+            _ = [Log._log(prefix + Log.strip_ansi(message), Log.COLOR_ERROR, True) for message in messages]
 
     # debug
     # NOTE: debug entries are not stored in action log
