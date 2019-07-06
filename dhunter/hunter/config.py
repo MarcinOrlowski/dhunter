@@ -32,6 +32,7 @@ class Config(ConfigBase):
         _keys = [
             # 'duplicates',
             # 'cmd_stats',
+            'clean_db',
             'db_file',
             'sort_by',
             'reverse_order',

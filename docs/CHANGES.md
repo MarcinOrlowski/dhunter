@@ -7,6 +7,7 @@ dev
 ---
  * Now uses full absolute path for each item strored in project db file
  * dhunter: automatically removes dead entries from used DB if they hit the filter
+ * dhunter: added `--clean-db` option to remove dead entries from project DB
 
 v1.2.0 (2019-03-11)
 -------------------

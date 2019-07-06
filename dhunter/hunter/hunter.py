@@ -79,6 +79,37 @@ class Hunter(object):
 
     # ------------------------------------------------------------------------------------------------------------
 
+    def clean_db(self, config: ConfigBase) -> None:
+        dead_rowids = []
+
+        hm = HashManager.get_instance()
+        hm.db_init()
+
+        cursor = hm.db.cursor()
+        query = 'SELECT ROWID, * FROM `files` ORDER BY ROWID'
+        cursor.execute(query)
+
+        Log.level_push('Looking for dead entries')
+        for row in cursor:
+            full_path = os.path.join(row['path'], row['name'])
+
+            # check if this file still exists and update DB if not
+            if not os.path.exists(full_path):
+                Log.e('{path}'.format(path=full_path), prefix='')
+                dead_rowids.append(row['ROWID'])
+
+        Log.i('Dead entries found: {}'.format(len(dead_rowids)))
+        Log.level_pop()
+
+        if dead_rowids:
+            Log.level_push('Updating database')
+            cursor = hm.db.cursor()
+            for id in dead_rowids:
+                cursor.execute('DELETE FROM `files` WHERE `ROWID`=?', (id,))
+            Log.level_pop()
+
+    # ------------------------------------------------------------------------------------------------------------
+
     def show_duplicates(self, config: ConfigBase) -> None:
         hm = HashManager.get_instance()
 
@@ -162,8 +193,11 @@ class Hunter(object):
             # init hash manager singleton
             HashManager.get_instance(self.config.db_file, self.config)
 
-            # if self.config.duplicates:
-            self.show_duplicates(self.config)
+            if self.config.clean_db:
+                self.clean_db(self.config)
+            else:
+                # if self.config.duplicates:
+                self.show_duplicates(self.config)
 
         except (ValueError, IOError) as ex:
             if not self.config.debug:

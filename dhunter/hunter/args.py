@@ -31,7 +31,10 @@ class Args(ArgsBase):
 
         group = parser.add_argument_group('Project')
         group.add_argument(metavar='DB_FILE', action='store', dest='db_file', nargs=1,
-                           help='Name of project database file to process.')
+                           help='Name of project database file to use.')
+        group.add_argument('-clean-db', '--clean-db',
+                           action='store_true', dest='clean_db',
+                           help='Updates project db and purges all records for files that no longer exist.')
 
         group = parser.add_argument_group('Sorting and results limit')
         group.add_argument('-s', '-sort', '--sort',
