@@ -46,13 +46,14 @@ class Args(ArgsBase):
         group.add_argument('-cmd', '--cmd', '--command',
                            action='store', dest='command', nargs=1, metavar="COMMAND", default=Const.CMD_SCAN,
                            help='Action to execute. Commands are: %s. ' % ', '.join(Const.SCANNER_CMDS) +
-                           'Default command is %s' % Const.CMD_SCAN
-                           )
+                           'Default command is %s' % Const.CMD_SCAN)
         group.add_argument('-ro', '--ro', '--read-only',
                            action='store_true', dest='dont_save_dot_file',
                            help='Tells the scanner to treat all the folders as read only and do not '
-                                'write cache file ({dot})'.format(dot=Const.FILE_DOT_DHUNTER)
-                           )
+                                'write cache file ({dot})'.format(dot=Const.FILE_DOT_DHUNTER))
+        group.add_argument('-rp', '--rp', '--relative-paths',
+                           action='store_true', dest='relative_paths',
+                           help='Store paths in DB as relative instead of absolute.')
 
         self._add_filter_option_group(parser)
         self._add_other_option_group(parser)

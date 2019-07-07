@@ -74,7 +74,8 @@ class Scanner(object):
             # we need to work on full paths otherwise hash database
             # would be completely useless w/o knowing starting directory
             # or while scanning more than one DIRs
-            path = os.path.abspath(path)
+            if not self.config.relative_paths:
+                path = os.path.abspath(path)
 
             dir_hash = hm.get_dirhash_for_path(path)
             dir_hash.scan_dir()

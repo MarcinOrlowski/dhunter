@@ -41,6 +41,7 @@ class Config(ConfigBase):
             'dont_save_dot_file',
             'command',
             'force',
+            'relative_paths',
         ]
         for key in _keys:
             config.__setattr__(key, getattr(args, key))
