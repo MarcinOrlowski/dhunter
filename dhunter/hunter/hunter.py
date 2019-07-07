@@ -110,7 +110,7 @@ class Hunter(object):
 
     # ------------------------------------------------------------------------------------------------------------
 
-    def show_duplicates(self, config: ConfigBase) -> None:
+    def show_file_duplicates(self, config: ConfigBase) -> None:
         hm = HashManager.get_instance()
 
         limit: int = config.limit
@@ -197,7 +197,7 @@ class Hunter(object):
                 self.clean_db(self.config)
             else:
                 # if self.config.duplicates:
-                self.show_duplicates(self.config)
+                self.show_file_duplicates(self.config)
 
         except (ValueError, IOError) as ex:
             if not self.config.debug:
