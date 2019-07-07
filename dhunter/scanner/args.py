@@ -54,6 +54,9 @@ class Args(ArgsBase):
         group.add_argument('-rp', '--rp', '--relative-paths',
                            action='store_true', dest='relative_paths',
                            help='Store paths in DB as relative instead of absolute.')
+        group.add_argument('-nr', '--nr', '--no-recursive',
+                           action='store_true', dest='no_recursive',
+                           help='Do not scan subdirectories.')
 
         self._add_filter_option_group(parser)
         self._add_other_option_group(parser)

@@ -11,6 +11,7 @@ dev
  * dhunter: now yields proper warning when source dir is a symlink
  * dscan: now supports `--force` to overwrite existing database file
  * dscan: added `--relative-paths` option
+ * dscan: added `--no-recursive` option
 
 v1.2.0 (2019-03-11)
 -------------------

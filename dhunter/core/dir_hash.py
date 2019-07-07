@@ -121,7 +121,7 @@ class DirHash(HashBase):
                 Log.vv('{path}: It is the symbolic link. Skipping.'.format(path=dir_entry.path))
                 continue
 
-            if self._config.filter.validate_dir(dir_entry.path):
+            if not self._config.no_recursive and self._config.filter.validate_dir(dir_entry.path):
                 dirs.append(dir_entry)
                 continue
 

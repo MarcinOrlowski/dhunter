@@ -42,6 +42,7 @@ class Config(ConfigBase):
             'command',
             'force',
             'relative_paths',
+            'no_recursive',
         ]
         for key in _keys:
             config.__setattr__(key, getattr(args, key))
