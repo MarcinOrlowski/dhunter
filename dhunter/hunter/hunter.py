@@ -56,7 +56,7 @@ class Hunter(object):
         while True:
             suffix = '' if idx is None else '_{idx}'.format(idx=idx)
             db_file = os.path.join(tempfile.gettempdir(), '{app}_{stamp}{suffix}.sqlite'.format(
-                    app=Const.APP_NAME, stamp=datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), suffix=suffix))
+                app=Const.APP_NAME, stamp=datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), suffix=suffix))
             if not os.path.exists(db_file):
                 break
 
@@ -151,10 +151,10 @@ class Hunter(object):
                     stats_duplicates_bytes_total += total_duplicates_size
 
                     Log.level_push('{idx:2d}: size: {size:s}, duplicates: {dupes:d}, wasted: {wasted:s}'.format(
-                            idx=file_hash_idx,
-                            size=Util.size_to_str(row['size']),
-                            dupes=duplicate_count,
-                            wasted=Util.size_to_str(total_duplicates_size)))
+                        idx=file_hash_idx,
+                        size=Util.size_to_str(row['size']),
+                        dupes=duplicate_count,
+                        wasted=Util.size_to_str(total_duplicates_size)))
                     group_header_shown = True
 
                 full_path = os.path.join(row['path'], row['name'])
@@ -193,11 +193,14 @@ class Hunter(object):
             # init hash manager singleton
             HashManager.get_instance(self.config.db_file, self.config)
 
-            if self.config.clean_db:
+            if self.config.command == Const.CMD_FILE_DUPES:
+                self.show_file_duplicates(self.config)
+            elif self.config.command == Const.CMD_DIR_DUPES:
+                self.show_dir_duplicates(self.config)
+            elif self.config.command == Const.CMD_CLEAN_DB:
                 self.clean_db(self.config)
             else:
-                # if self.config.duplicates:
-                self.show_file_duplicates(self.config)
+                Log.abort('Unknown command: {cmd}'.format(cmd=self.config.command))
 
         except (ValueError, IOError) as ex:
             if not self.config.debug:

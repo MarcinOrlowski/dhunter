@@ -7,7 +7,7 @@ dev
 ---
  * Now uses full absolute path for each item strored in project db file
  * dhunter: automatically removes dead entries from used DB if they hit the filter
- * dhunter: added `--clean-db` option to remove dead entries from project DB
+ * dhunter: added `cleandb` command that removes dead entries from project DB
  * dhunter: now yields proper warning when source dir is a symlink
  * dscan: now supports `--force` to overwrite existing database file
  * dscan: added `--relative-paths` option

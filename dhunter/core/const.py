@@ -48,3 +48,12 @@ class Const(object):
         CMD_SCAN,
         CMD_CHECK,
     ]
+
+    CMD_FILE_DUPES = 'filedupes'
+    CMD_DIR_DUPES = 'dirdupes'
+    CMD_CLEAN_DB = 'cleandb'
+    HUNDER_CMDS = [
+        CMD_FILE_DUPES,
+        CMD_DIR_DUPES,
+        CMD_CLEAN_DB,
+    ]

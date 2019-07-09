@@ -29,12 +29,20 @@ class Args(ArgsBase):
         """
         parser = self._get_parser()
 
-        group = parser.add_argument_group('Project')
+        group = parser.add_argument_group('Commands')
+        group.add_argument(metavar='COMMAND', action='store', dest='command', nargs=1,
+                           help='Operation modes: ' + ', '.join(Const.HUNDER_CMDS))
+        # group.add_argument('-c', '-cmd', '--cmd',
+        #                    metavar='MODE', action='store', dest='command', nargs=1,
+        #                    help='Operation modes: ' + ', '.join(Const.HUNDER_CMDS))
+
+        # group.add_argument('-clean-db', '--clean-db',
+        #                    action='store_true', dest='clean_db',
+        #                    help='Updates project db and purges all records for files that no longer exist.')
+
+        group = parser.add_argument_group('Project database')
         group.add_argument(metavar='DB_FILE', action='store', dest='db_file', nargs=1,
                            help='Name of project database file to use.')
-        group.add_argument('-clean-db', '--clean-db',
-                           action='store_true', dest='clean_db',
-                           help='Updates project db and purges all records for files that no longer exist.')
 
         group = parser.add_argument_group('Sorting and results limit')
         group.add_argument('-s', '-sort', '--sort',
