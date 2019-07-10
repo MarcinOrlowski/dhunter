@@ -61,7 +61,7 @@ class Filter(object):
 
     def validate_file(self, dir_entry: os.DirEntry) -> bool:
         """Validates given DirEntry. Returns False if entry should be completely ignored,
-        or True if keep it for further processing.
+        or True if we want to keep it for further processing.
 
         Ignore all zero length files. There are usually there for a purpose like .dummy etc,
         so there can be tons of it with the same name even, so by default, ignore them completely.
@@ -89,6 +89,7 @@ class Filter(object):
             Log.vv('{name}: File is shorter than min size ({size}). Skipping.'.format(name=dir_entry.name,
                                                                                       size=item_size))
             return False
+
         if 0 < self.max_size < item_size:
             Log.vv('{name}: File is biger than max size ({size}). Skipping.'.format(name=dir_entry.name,
                                                                                     size=item_size))

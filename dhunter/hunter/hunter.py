@@ -168,7 +168,8 @@ class Hunter(object):
                 else:
                     Log.i(log_msg)
 
-            Log.level_pop()
+            if group_header_shown:
+                Log.level_pop()
 
         Log.i(' ')
         Log.level_push('Summary')
