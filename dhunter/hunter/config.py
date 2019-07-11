@@ -73,7 +73,7 @@ class Config(ConfigBase):
                 Log.abort('Path "{dir}" is not a folder'.format(dir=single_dir))
 
         if config.command is None:
-            config.command = Const.CMD_DIR_DUPES
+            config.command = Const.CMD_DIR_HUNT
         else:
             config.command = config.command[0]
             if config.command not in Const.HUNDER_CMDS:

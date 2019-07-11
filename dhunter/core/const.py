@@ -49,11 +49,11 @@ class Const(object):
         CMD_CHECK,
     ]
 
-    CMD_FILE_DUPES = 'filedupes'
-    CMD_DIR_DUPES = 'dirdupes'
+    CMD_FILE_HUNT = 'filehunt'
+    CMD_DIR_HUNT = 'dirhunt'
     CMD_CLEAN_DB = 'cleandb'
     HUNDER_CMDS = [
-        CMD_FILE_DUPES,
-        CMD_DIR_DUPES,
+        CMD_FILE_HUNT,
+        CMD_DIR_HUNT,
         CMD_CLEAN_DB,
     ]

@@ -194,9 +194,9 @@ class Hunter(object):
             # init hash manager singleton
             HashManager.get_instance(self.config.db_file, self.config)
 
-            if self.config.command == Const.CMD_FILE_DUPES:
+            if self.config.command == Const.CMD_FILE_HUNT:
                 self.show_file_duplicates(self.config)
-            elif self.config.command == Const.CMD_DIR_DUPES:
+            elif self.config.command == Const.CMD_DIR_HUNT:
                 self.show_dir_duplicates(self.config)
             elif self.config.command == Const.CMD_CLEAN_DB:
                 self.clean_db(self.config)
