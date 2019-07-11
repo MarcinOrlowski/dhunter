@@ -130,15 +130,15 @@ class Hunter(object):
         stats_duplicates_bytes_total = 0
 
         cursor = hm.db.cursor()
-        query = 'SELECT ROWID, * FROM `files` WHERE `hash` = ? AND `size` >= ?'
+        query = 'SELECT ROWID, * FROM `files` WHERE `size` >= ? AND `hash` = ?'
         if config.max_size > 0:
             query += ' AND `size` <= ? '
         query += 'ORDER BY `path`,`name`'
         for file_hash_idx, file_hash in enumerate(dupli_hashes, start=1):
+            args = [config.min_size, file_hash]
             if config.max_size > 0:
-                cursor.execute(query, (file_hash, config.min_size, config.max_size))
-            else:
-                cursor.execute(query, (file_hash, config.min_size))
+                args.append(config.max_size)
+            cursor.execute(query, tuple(args))
 
             group_header_shown = False
             dupli_rows = cursor.fetchall()
