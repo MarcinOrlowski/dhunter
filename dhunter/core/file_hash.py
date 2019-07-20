@@ -221,7 +221,7 @@ class FileHash(HashBase, DbBase):
 
     # -----------------------------------------------------------------------------------------------------------
 
-    def exists(self) -> str:
+    def exists(self) -> bool:
         """Checks if file this object refers to, is still present in current folder."""
         return os.path.exists(self.path)
 

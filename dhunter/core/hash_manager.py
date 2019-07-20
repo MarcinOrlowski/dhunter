@@ -78,6 +78,22 @@ class HashManager(object):
 
         return dh
 
+    def has_dirhash_for_path(self, dir_path: str) -> bool:
+        """Checks if we already have dirhash object in project file.
+
+        :param dir_path: Path to look DirHash object for
+        """
+        result = False
+
+        if self._use_db:
+            self.db_init()
+            cursor: sqlite3.Cursor = self._db.cursor()
+            cursor.execute('SELECT COUNT(`path`) AS `cnt` FROM `files` where `path` = ? LIMIT 1', (dir_path,))
+            if cursor.rowcount() == 1 and cursor.fetchone()[0] >= 1:
+                result = True
+
+        return result
+
     def scan_dirs(self, dirs: typing.List[os.DirEntry]) -> None:
         if dirs:
             # set DB dirty so we can detect if user aborted in mid-scanning

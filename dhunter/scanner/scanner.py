@@ -12,9 +12,11 @@
 """
 
 import datetime
+import os
 
 from .args import Args
 from .config import Config
+from ..core.const import Const
 from ..core.hash_manager import HashManager
 from ..core.log import Log
 from ..util.util import Util
@@ -60,6 +62,36 @@ class Scanner(object):
 
     # ------------------------------------------------------------------------------------------------------------
 
+    def _cmd_scan(self):
+        # init hash manager singleton
+        hm = HashManager.get_instance(self.config.db_file, self.config)
+
+        Log.d('Scanning source dirs')
+        for path in self.config.src_dirs:
+            if not self.config.filter.validate_dir(path, warn_on_symlink=True):
+                continue
+
+            # we need to work on full paths otherwise hash database
+            # would be completely useless w/o knowing starting directory
+            # or while scanning more than one DIRs
+            if not self.config.relative_paths:
+                path = os.path.abspath(path)
+
+            dir_hash = hm.get_dirhash_for_path(path)
+            dir_hash.scan_dir()
+
+    def _cmd_check(self):
+        # init hash manager singleton
+        hm = HashManager.get_instance(self.config.db_file, self.config)
+
+        Log.d('Validating source dirs')
+        for path in self.config.src_dirs:
+            if not self.config.filter.validate_dir(path):
+                continue
+
+            result = '        ' if hm.has_dirhash_for_path(path) else 'NOT FOUND'
+            print('[{res}]: {path}'.format(res=result, path=path))
+
     def main(self) -> int:
         rc = 0
 
@@ -73,16 +105,12 @@ class Scanner(object):
             start_stamp = datetime.datetime.now()
             Log.banner('Started at {stamp}'.format(stamp=start_stamp.replace(microsecond=0)), top=False)
 
-            # init hash manager singleton
-            hm = HashManager.get_instance(self.config.db_file, self.config)
-
-            Log.d('Scanning source dirs')
-            for path in self.config.src_dirs:
-                if not self.config.filter.validate_dir(path):
-                    continue
-
-                dir_hash = hm.get_dirhash_for_path(path)
-                dir_hash.scan_dir()
+            cmds = {
+                Const.CMD_SCAN: self._cmd_scan,
+                Const.CMD_CHECK: self._cmd_check,
+            }
+            if self.config.command in cmds:
+                cmds[self.config.command]()
 
             end_stamp = datetime.datetime.now()
             time_elapsed = end_stamp - start_stamp
@@ -108,6 +136,4 @@ class Scanner(object):
         """Application scanner entry point.
         """
         Util.validate_env()
-
-        app = Scanner()
-        return app.main()
+        return Scanner().main()

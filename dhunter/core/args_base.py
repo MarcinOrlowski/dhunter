@@ -17,12 +17,22 @@ from .const import Const
 
 class ArgsBase(object):
 
+    def _get_tool_name(self) -> str:
+        """
+        Returns name of invoked utility. This string is only used when help
+        string is going to be shown, so it mention the right name of package tool
+        handling these options.
+
+        :return:
+        """
+        return Const.APP_NAME.lower()
+
     def _get_parser(self) -> argparse.ArgumentParser:
         parser = argparse.ArgumentParser(
-                prog=Const.APP_NAME.lower(),
-                description='{app} v{v}\n'.format(app=Const.APP_NAME, v=Const.APP_VERSION) +
-                            'Written by Marcin Orlowski, See ' + Const.APP_URL,
-                formatter_class=argparse.RawDescriptionHelpFormatter)
+            prog=self._get_tool_name(),
+            description='{app} v{v}\n'.format(app=Const.APP_NAME, v=Const.APP_VERSION) +
+                        'Written by Marcin Orlowski, See ' + Const.APP_URL,
+            formatter_class=argparse.RawDescriptionHelpFormatter)
 
         return parser
 
@@ -42,10 +52,14 @@ class ArgsBase(object):
                                 'unit is one letter (case insensitive): b for bytes, k for KiB, '
                                 'm for MiB, g for GiB and t for TiB. i.e. "1024" = "1024b" = "1k". '
                                 'Default value is {}. Zero means no max size limit.'.format(
-                                   Const.FILE_FILTER_SIZE_MAX))
+                               Const.FILE_FILTER_SIZE_MAX))
 
     def _add_other_option_group(self, parser: argparse.ArgumentParser) -> None:
         group = parser.add_argument_group('Other')
+        group.add_argument('-f', '-force', '--force',
+                           action='store_true', dest='force',
+                           help='Enforces certain operations (depends on operation context).')
+
         group.add_argument('-v', '-verbose', '--verbose',
                            action='store_true', dest='verbose',
                            help='Enables verbose output.')

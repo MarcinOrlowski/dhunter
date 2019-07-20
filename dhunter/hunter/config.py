@@ -42,6 +42,7 @@ class Config(ConfigBase):
             'verbose',
             'debug',
             'debug_verbose',
+            'command',
         ]
         for key in _keys:
             config.__setattr__(key, getattr(args, key))
@@ -71,17 +72,19 @@ class Config(ConfigBase):
             elif not os.path.isdir(os.path.abspath(single_dir)):
                 Log.abort('Path "{dir}" is not a folder'.format(dir=single_dir))
 
+        if config.command is None:
+            config.command = Const.CMD_DIR_HUNT
+        else:
+            config.command = config.command[0]
+            if config.command not in Const.HUNDER_CMDS:
+                Log.abort('Unknown command: "{name}"'.format(name=config.command))
+
         if config.sort_by is None:
             config.sort_by = 'size'
         else:
             config.sort_by = config.sort_by[0]
             if config.sort_by not in Const.ALLOWED_SORT_VALUES:
                 Log.abort('Unknown sort order: "{name}"'.format(name=config.sort_by))
-
-        if config.sort_by is not None:
-            config.sort_by = config.sort_by[0]
-        else:
-            config.sort_by = 'size'
 
         # after that point, data in Config should be sanitized, validated, usable and useful
 

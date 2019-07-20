@@ -33,6 +33,7 @@ class DirHash(HashBase):
 
         if load_cache_file:
             self._file_hash_cache.load()
+            self._file_hash_cache.save()
 
         from .hash_manager import HashManager
         self._hash_manager: HashManager = HashManager.get_instance()
@@ -120,7 +121,7 @@ class DirHash(HashBase):
                 Log.vv('{path}: It is the symbolic link. Skipping.'.format(path=dir_entry.path))
                 continue
 
-            if self._config.filter.validate_dir(dir_entry.path):
+            if not self._config.no_recursive and self._config.filter.validate_dir(dir_entry.path):
                 dirs.append(dir_entry)
                 continue
 
@@ -162,12 +163,10 @@ class DirHash(HashBase):
 
             # we have some names left untouched from last cache read. Most likely these files no longer exist
             for file_name in current_cached_names:
-                Log.level_push(file_name)
                 if not (os.path.exists(file_name) and os.path.isfile(file_name)):
                     self._file_hash_cache.remove(file_name)
                 else:
                     Log.e('Zombie file detected: "{name}"'.format(name=file_name))
-                Log.level_pop()
 
             # save directory cache into file and DB
             self.save_cache()

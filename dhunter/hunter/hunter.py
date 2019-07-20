@@ -56,7 +56,7 @@ class Hunter(object):
         while True:
             suffix = '' if idx is None else '_{idx}'.format(idx=idx)
             db_file = os.path.join(tempfile.gettempdir(), '{app}_{stamp}{suffix}.sqlite'.format(
-                    app=Const.APP_NAME, stamp=datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), suffix=suffix))
+                app=Const.APP_NAME, stamp=datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), suffix=suffix))
             if not os.path.exists(db_file):
                 break
 
@@ -79,7 +79,38 @@ class Hunter(object):
 
     # ------------------------------------------------------------------------------------------------------------
 
-    def show_duplicates(self, config: ConfigBase) -> None:
+    def clean_db(self, config: ConfigBase) -> None:
+        dead_rowids = []
+
+        hm = HashManager.get_instance()
+        hm.db_init()
+
+        cursor = hm.db.cursor()
+        query = 'SELECT ROWID, * FROM `files` ORDER BY ROWID'
+        cursor.execute(query)
+
+        Log.level_push('Looking for dead entries')
+        for row in cursor:
+            full_path = os.path.join(row['path'], row['name'])
+
+            # check if this file still exists and update DB if not
+            if not os.path.exists(full_path):
+                Log.e('{path}'.format(path=full_path), prefix='')
+                dead_rowids.append(row['ROWID'])
+
+        Log.i('Dead entries found: {}'.format(len(dead_rowids)))
+        Log.level_pop()
+
+        if dead_rowids:
+            Log.level_push('Updating database')
+            cursor = hm.db.cursor()
+            for id in dead_rowids:
+                cursor.execute('DELETE FROM `files` WHERE `ROWID`=?', (id,))
+            Log.level_pop()
+
+    # ------------------------------------------------------------------------------------------------------------
+
+    def show_file_duplicates(self, config: ConfigBase) -> None:
         hm = HashManager.get_instance()
 
         limit: int = config.limit
@@ -99,15 +130,15 @@ class Hunter(object):
         stats_duplicates_bytes_total = 0
 
         cursor = hm.db.cursor()
-        query = 'SELECT * FROM `files` WHERE `hash` = ? AND `size` >= ?'
+        query = 'SELECT ROWID, * FROM `files` WHERE `size` >= ? AND `hash` = ?'
         if config.max_size > 0:
             query += ' AND `size` <= ? '
         query += 'ORDER BY `path`,`name`'
         for file_hash_idx, file_hash in enumerate(dupli_hashes, start=1):
+            args = [config.min_size, file_hash]
             if config.max_size > 0:
-                cursor.execute(query, (file_hash, config.min_size, config.max_size))
-            else:
-                cursor.execute(query, (file_hash, config.min_size))
+                args.append(config.max_size)
+            cursor.execute(query, tuple(args))
 
             group_header_shown = False
             dupli_rows = cursor.fetchall()
@@ -120,15 +151,25 @@ class Hunter(object):
                     stats_duplicates_bytes_total += total_duplicates_size
 
                     Log.level_push('{idx:2d}: size: {size:s}, duplicates: {dupes:d}, wasted: {wasted:s}'.format(
-                            idx=file_hash_idx,
-                            size=Util.size_to_str(row['size']),
-                            dupes=duplicate_count,
-                            wasted=Util.size_to_str(total_duplicates_size)))
+                        idx=file_hash_idx,
+                        size=Util.size_to_str(row['size']),
+                        dupes=duplicate_count,
+                        wasted=Util.size_to_str(total_duplicates_size)))
                     group_header_shown = True
 
-                Log.i('{idx:2d}: {path}'.format(idx=idx, path=os.path.join(row['path'], row['name'])))
+                full_path = os.path.join(row['path'], row['name'])
+                log_msg = '{idx:2d}: {path}'.format(idx=idx, path=full_path)
 
-            Log.level_pop()
+                # check if this file still exists and update DB if not
+                if not os.path.exists(full_path):
+                    cursor = hm.db.cursor()
+                    cursor.execute('DELETE FROM `files` WHERE `ROWID`=?', (row['ROWID'],))
+                    Log.e(log_msg, prefix='')
+                else:
+                    Log.i(log_msg)
+
+            if group_header_shown:
+                Log.level_pop()
 
         Log.i(' ')
         Log.level_push('Summary')
@@ -153,8 +194,14 @@ class Hunter(object):
             # init hash manager singleton
             HashManager.get_instance(self.config.db_file, self.config)
 
-            # if self.config.duplicates:
-            self.show_duplicates(self.config)
+            if self.config.command == Const.CMD_FILE_HUNT:
+                self.show_file_duplicates(self.config)
+            elif self.config.command == Const.CMD_DIR_HUNT:
+                self.show_dir_duplicates(self.config)
+            elif self.config.command == Const.CMD_CLEAN_DB:
+                self.clean_db(self.config)
+            else:
+                Log.abort('Unknown command: {cmd}'.format(cmd=self.config.command))
 
         except (ValueError, IOError) as ex:
             if not self.config.debug:
@@ -171,6 +218,4 @@ class Hunter(object):
         """Application entry point.
         """
         Util.validate_env()
-
-        app = Hunter()
-        return app.main()
+        return Hunter().main()

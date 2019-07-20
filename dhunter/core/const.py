@@ -40,3 +40,20 @@ class Const(object):
         'c',
         'count',
     ]
+
+    CMD_SCAN = 'scan'
+    CMD_CHECK = 'check'
+
+    SCANNER_CMDS = [
+        CMD_SCAN,
+        CMD_CHECK,
+    ]
+
+    CMD_FILE_HUNT = 'filehunt'
+    CMD_DIR_HUNT = 'dirhunt'
+    CMD_CLEAN_DB = 'cleandb'
+    HUNDER_CMDS = [
+        CMD_FILE_HUNT,
+        CMD_DIR_HUNT,
+        CMD_CLEAN_DB,
+    ]
