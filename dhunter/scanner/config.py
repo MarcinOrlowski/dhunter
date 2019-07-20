@@ -66,12 +66,10 @@ class Config(ConfigBase):
                 Log.abort('Unknown command: %r' % config.command)
 
             if config.command == Const.CMD_SCAN:
-                if config.db_file is None:
-                    Log.abort('Command %r requires file name for project file to create.' % config.command)
-                elif os.path.exists(config.db_file):
-                    Log.abort('File already exists: %s' % config.db_file)
+                if config.db_file is not None and os.path.exists(config.db_file):
+                    Log.abort('Project file already exists: %s' % config.db_file)
 
-            elif config.command == Const.CMD_CHECK:
+            if config.command == Const.CMD_CHECK:
                 if config.db_file is None:
                     Log.abort('Command %r requires existing project file.')
 
@@ -84,7 +82,7 @@ class Config(ConfigBase):
 
         if config.dont_save_dot_file and config.db_file is None:
             Log.abort('When using --read-only flag you must create database file with --db, otherwise '
-                      'the whole scanning process makes no much sense.')
+                      'the whole scanning process is completely pointless.')
 
         # after that point, data in Config should be sanitized, validated, usable and useful
 
