@@ -54,6 +54,6 @@ class Const(object):
     CMD_CLEAN_DB = 'cleandb'
     HUNDER_CMDS = [
         CMD_FILE_HUNT,
-        CMD_DIR_HUNT,
+        # CMD_DIR_HUNT,
         CMD_CLEAN_DB,
     ]
