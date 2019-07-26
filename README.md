@@ -27,9 +27,9 @@
 
 ## Features ##
 
- * Content based file matching
+ * Content based file matching (sha256)
  * Designed to work with lot of data:
-   * caches folder scaning results for quick reuse
+   * caches folder scaning results for quick reuse/rescan
    * directory scanning can be aborted and **resumed** at any moment
  * Smart content filters
    * Ignores zero length files and symlinks
