@@ -51,8 +51,19 @@ class ArgsBase(object):
                                 'Supported format <VAL><UNIT> where val is positive integer, and '
                                 'unit is one letter (case insensitive): b for bytes, k for KiB, '
                                 'm for MiB, g for GiB and t for TiB. i.e. "1024" = "1024b" = "1k". '
-                                'Default value is {}. Zero means no max size limit.'.format(
+                                'Zero means no max size limit. Default value is {}.'.format(
                                Const.FILE_FILTER_SIZE_MAX))
+
+        group.add_argument('-exdir', '--exdir',
+                           metavar='REGEXP', action='append', dest='exclude_dir_regexps', nargs=1, type=str,
+                           help='Exclude directories (paths) matching specified regular expression. '
+                                'Option can be used multiple times for multiple patters. Also always quote '
+                                'your patterns to prevent shell expansion.')
+        group.add_argument('-exfile', '--exfile',
+                           metavar='REGEXP', action='append', dest='exclude_file_regexps', nargs=1, type=str,
+                           help='Exclude filenames matching specified regular expression. '
+                                'Option can be used multiple times for multiple patters. Also always quote '
+                                'your patterns to prevent shell expansion.')
 
     def _add_other_option_group(self, parser: argparse.ArgumentParser) -> None:
         group = parser.add_argument_group('Other')

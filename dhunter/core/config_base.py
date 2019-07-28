@@ -35,6 +35,8 @@ class ConfigBase(object):
         self.filter: Filter or None = None
         self.dont_save_dot_file: bool = False
         self.command: str or None = None
+        self.exclude_dir_regexps: List[str] = []
+        self.exclude_file_regexps: List[str] = []
 
     @staticmethod
     @abstractmethod
