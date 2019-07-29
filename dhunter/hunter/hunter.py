@@ -79,6 +79,7 @@ class Hunter(object):
 
     # ------------------------------------------------------------------------------------------------------------
 
+    # noinspection PyUnusedLocal
     def clean_db(self, config: ConfigBase) -> None:
         dead_rowids = []
 
@@ -104,8 +105,8 @@ class Hunter(object):
         if dead_rowids:
             Log.level_push('Updating database')
             cursor = hm.db.cursor()
-            for id in dead_rowids:
-                cursor.execute('DELETE FROM `files` WHERE `ROWID`=?', (id,))
+            for row_id in dead_rowids:
+                cursor.execute('DELETE FROM `files` WHERE `ROWID`=?', (row_id,))
             Log.level_pop()
 
     # ------------------------------------------------------------------------------------------------------------
