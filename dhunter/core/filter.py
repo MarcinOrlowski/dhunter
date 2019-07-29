@@ -46,15 +46,19 @@ class Filter(object):
         self.min_size = config.min_size
         self.max_size = config.max_size
 
-    def _append_regexp(self, to, regexps):
+    def _append_regexp(self, to: List[str], regexps: List[str] or None):
+        """Appends new regexp rules to existing blacklists."""
         if regexps:
             try:
                 for pattern in regexps:
                     re.compile(pattern)
-                    to.append(pattern)
+                    if pattern not in to:
+                        to.append(pattern)
             except re.error:
                 from .log import Log
                 Log.abort('Invalid pattern: {}'.format(pattern))
+
+    # ------------------------------------------------------------------------------------------------------------
 
     @property
     def min_size(self) -> int:
