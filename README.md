@@ -16,7 +16,7 @@
  * [Requirements and installation](docs/install.md)
  * [Bugs reports and contributions](docs/contribute.md)
  * [Credits and license](#credits-and-license)
- * [What's new?](docs/CHANGES.md)
+ * [Changelog](docs/CHANGES.md)
 
 ## Introduction ##
 
