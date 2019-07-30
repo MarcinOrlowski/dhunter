@@ -12,6 +12,7 @@ dev
  * dscan: now supports `--force` to overwrite existing database file
  * dscan: added `--relative-paths` option
  * dscan: added `--no-recursive` option
+ * dscan: added support for custom file (`--exfile`) and dir exclusion (`--exdir`) rules
 
 v1.2.0 (2019-03-11)
 -------------------
