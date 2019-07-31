@@ -17,7 +17,6 @@ import typing
 
 from .config_base import ConfigBase
 from .dir_hash import DirHash
-from .file_hash import FileHash
 
 
 class HashManager(object):

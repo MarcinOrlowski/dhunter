@@ -64,8 +64,8 @@ class DbBase(object):
     def insert(self, item):
         raise NotImplementedError
 
-    def replace(self, item):
+    def replace(self):
         raise NotImplementedError
 
-    def remove(self, item):
+    def remove(self):
         raise NotImplementedError
