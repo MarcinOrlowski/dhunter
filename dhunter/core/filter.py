@@ -58,6 +58,7 @@ class Filter(object):
                         to.append(pattern)
             except re.error:
                 from .log import Log
+                # noinspection PyUnboundLocalVariable
                 Log.abort('Invalid pattern: {}'.format(pattern))
 
     # ------------------------------------------------------------------------------------------------------------

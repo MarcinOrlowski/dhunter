@@ -52,7 +52,7 @@ class ArgsBase(object):
                                 'unit is one letter (case insensitive): b for bytes, k for KiB, '
                                 'm for MiB, g for GiB and t for TiB. i.e. "1024" = "1024b" = "1k". '
                                 'Zero means no max size limit. Default value is {}.'.format(
-                               Const.FILE_FILTER_SIZE_MAX))
+                                 Const.FILE_FILTER_SIZE_MAX))
 
         return group
 
