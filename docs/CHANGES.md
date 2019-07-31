@@ -3,8 +3,8 @@
 
 ## Changelog ##
 
-dev
----
+v1.3.0 (2019-07-31)
+-------------------
  * Now uses full absolute path for each item strored in project db file
  * dhunter: automatically removes dead entries from used DB if they hit the filter
  * dhunter: added `cleandb` command that removes dead entries from project DB
