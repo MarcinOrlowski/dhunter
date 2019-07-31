@@ -3,8 +3,8 @@
 
 ## Changelog ##
 
-dev
----
+v1.3.0 (2019-07-31)
+-------------------
  * Now uses full absolute path for each item strored in project db file
  * dhunter: automatically removes dead entries from used DB if they hit the filter
  * dhunter: added `cleandb` command that removes dead entries from project DB
@@ -12,6 +12,7 @@ dev
  * dscan: now supports `--force` to overwrite existing database file
  * dscan: added `--relative-paths` option
  * dscan: added `--no-recursive` option
+ * dscan: added support for custom file (`--exfile`) and dir exclusion (`--exdir`) rules
 
 v1.2.0 (2019-03-11)
 -------------------

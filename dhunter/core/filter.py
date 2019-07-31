@@ -38,10 +38,30 @@ class Filter(object):
 
     def __init__(self, config: ConfigBase):
         self._file_name_blacklist = Filter._BASE_FILE_NAME_BLACKLIST
+        if hasattr(config, 'exclude_file_regexps'):
+            self._append_regexp(self._file_name_blacklist, config.exclude_file_regexps)
+
         self._dir_name_blacklist = Filter._BASE_DIR_NAME_BLACKLIST
+        if hasattr(config, 'exclude_dir_regexps'):
+            self._append_regexp(self._dir_name_blacklist, config.exclude_dir_regexps)
 
         self.min_size = config.min_size
         self.max_size = config.max_size
+
+    def _append_regexp(self, to: List[str], regexps: List[str] or None):
+        """Appends new regexp rules to existing blacklists."""
+        if regexps:
+            try:
+                for pattern in regexps:
+                    re.compile(pattern)
+                    if pattern not in to:
+                        to.append(pattern)
+            except re.error:
+                from .log import Log
+                # noinspection PyUnboundLocalVariable
+                Log.abort('Invalid pattern: {}'.format(pattern))
+
+    # ------------------------------------------------------------------------------------------------------------
 
     @property
     def min_size(self) -> int:

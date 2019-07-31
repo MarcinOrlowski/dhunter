@@ -271,15 +271,12 @@ class FileHash(HashBase, DbBase):
 
         self.__create_tables(queries)
 
-    def replace(self, file_hash) -> None:
-        if file_hash is None or not isinstance(file_hash, FileHash):
-            raise ValueError('Expecting FileHash instance, received {type}'.format(type=type(file_hash)))
-
+    def replace(self) -> None:
         self.__db_connect()
 
         sql = 'REPLACE INTO files(`path`,`name`,`hash`,`size`,`mtime`,`ctime`,`inode`) VALUES(?,?,?,?,?,?,?)'
-        dir_path = os.path.dirname(file_hash.path)
-        vals = (dir_path, file_hash.name, file_hash.hash, file_hash.size, file_hash.mtime,
-                file_hash.ctime, file_hash.inode)
+        dir_path = os.path.dirname(self.path)
+        vals = (dir_path, self.name, self.hash, self.size, self.mtime, self.ctime, self.inode)
+
         cur = self.__db.cursor()
         cur.execute(sql, vals)

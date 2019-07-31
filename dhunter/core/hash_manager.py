@@ -17,7 +17,6 @@ import typing
 
 from .config_base import ConfigBase
 from .dir_hash import DirHash
-from .file_hash import FileHash
 
 
 class HashManager(object):
@@ -182,29 +181,6 @@ class HashManager(object):
         self._db_connect()
         _ = [self._db.cursor().execute(query) for query in queries]
 
-    def _replace_file_hash(self, file_hash: FileHash or None) -> None:
-        if self._use_db is False:
-            return
-
-        from .log import Log
-
-        Log.level_push()
-        Log.dd('insert file hash({})'.format(file_hash.name))
-
-        if file_hash is None or not isinstance(file_hash, FileHash):
-            raise ValueError('Expecting FileHash instance, received {type}'.format(type=type(file_hash)))
-
-        self.db_init()
-
-        sql = 'REPLACE INTO files(`path`,`name`,`hash`,`size`,`mtime`,`ctime`,`inode`) VALUES(?,?,?,?,?,?,?)'
-        dir_path = os.path.dirname(file_hash.path)
-        vals = (dir_path, file_hash.name, file_hash.hash, file_hash.size, file_hash.mtime,
-                file_hash.ctime, file_hash.inode)
-        cur = self._db.cursor()
-        cur.execute(sql, vals)
-
-        Log.level_pop()
-
     def insert(self, dir_hash: DirHash or None) -> None:
         if self._use_db is False:
             return
@@ -230,7 +206,7 @@ class HashManager(object):
         from .const import Const
         for _, file_hash in dir_hash.cache.items():
             if file_hash.name not in [Const.FILE_DOT_IGNORE, Const.FILE_DOT_DHUNTER]:
-                self._replace_file_hash(file_hash)
+                file_hash.replace()
         self._db.commit()
 
     def get_stats(self) -> (int, int, int):

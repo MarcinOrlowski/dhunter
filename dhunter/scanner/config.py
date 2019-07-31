@@ -43,6 +43,8 @@ class Config(ConfigBase):
             'force',
             'relative_paths',
             'no_recursive',
+            'exclude_dir_regexps',
+            'exclude_file_regexps',
         ]
         for key in _keys:
             config.__setattr__(key, getattr(args, key))
@@ -58,6 +60,16 @@ class Config(ConfigBase):
                 Log.abort('Project file already exists.')
             else:
                 os.unlink(config.db_file)
+
+        if config.exclude_file_regexps is not None:
+            config.exclude_file_regexps = [x for y in config.exclude_file_regexps for x in y]
+        else:
+            config.exclude_file_regexps = []
+
+        if config.exclude_dir_regexps is not None:
+            config.exclude_dir_regexps = [x for y in config.exclude_dir_regexps for x in y]
+        else:
+            config.exclude_dir_regexps = []
 
         if config.command is not None:
             config.command = config.command

@@ -76,6 +76,21 @@
     * .htaccess
     * .htpasswd
     * .gitignore
+
+##### Custom filters #####
+
+ You can provide own regular expressions for both file and directory filtering purposes by using
+ `--exdir` and `--exfile` options, i.e:
+
+    dscan --exdir ".*/cache" /disk1/pictures
+
+ would scan `/disk1/pictures` and skip all "cache" named directories. If you want to provide more
+ than one custom rules, you can use said switches more than once, i.e.
+
+    dscan --exdir ".*/cache" --exdir ".*/foo" /disk1/pictures
+
+ **NOTE:** You should always quote your regular expression if you use special characters that
+ could be expanded by your shell.
  
 ### Hunting ###
 
