@@ -32,7 +32,7 @@ class Args(ArgsBase):
         group = parser.add_argument_group('Project')
         group.add_argument('-db', '--db',
                            metavar='DB_FILE', action='store', dest='db_file', nargs=1,
-                           help='Name of project database file to read and process.')
+                           help='Name of project database file to create.')
 
         group.add_argument(
             metavar='DIR', action='store', dest='src_dirs', nargs='+',
@@ -50,7 +50,7 @@ class Args(ArgsBase):
         group.add_argument('-ro', '--ro', '--read-only',
                            action='store_true', dest='dont_save_dot_file',
                            help='Tells the scanner to treat all the folders as read only and do not '
-                                'write cache file ({dot})'.format(dot=Const.FILE_DOT_DHUNTER))
+                                'write cache file ({dot}).'.format(dot=Const.FILE_DOT_DHUNTER))
         group.add_argument('-rp', '--rp', '--relative-paths',
                            action='store_true', dest='relative_paths',
                            help='Store paths in DB as relative instead of absolute.')
