@@ -39,5 +39,5 @@
 
 ## Credits and license ##
 
- * Written and copyrighted ©2018-2019 by Marcin Orlowski
+ * Written and copyrighted ©2018-2020 by Marcin Orlowski
  * dhunter is open-sourced software licensed under the MIT license
