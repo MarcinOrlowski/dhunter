@@ -115,9 +115,7 @@ class HashManager(object):
     # ------------------------------------------------------------------------------------------------------------
 
     def db_init(self) -> None:
-        if self._use_db:
-            self._db_connect()
-            self._db_create_tables()
+        self._db_create_tables()
 
     def db_cleanup(self) -> None:
         self.__db_disconnect()

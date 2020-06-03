@@ -233,6 +233,7 @@ class FileHash(HashBase, DbBase):
     def to_json(self) -> str:
         attrs = self._get_base_attrs()
 
+
         for key in self._json_keys:
             attrs[key] = self.__getattribute__(key)
 
@@ -269,14 +270,15 @@ class FileHash(HashBase, DbBase):
             'CREATE INDEX IF NOT EXISTS `hash` ON `files` (`hash`);',
         ]
 
-        self.__create_tables(queries)
+        self._create_tables(queries)
 
+    @overrides(DbBase)
     def replace(self) -> None:
-        self.__db_connect()
+        self._db_connect()
 
         sql = 'REPLACE INTO files(`path`,`name`,`hash`,`size`,`mtime`,`ctime`,`inode`) VALUES(?,?,?,?,?,?,?)'
         dir_path = os.path.dirname(self.path)
         vals = (dir_path, self.name, self.hash, self.size, self.mtime, self.ctime, self.inode)
 
-        cur = self.__db.cursor()
+        cur = self._db.cursor()
         cur.execute(sql, vals)

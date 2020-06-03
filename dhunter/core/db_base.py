@@ -19,27 +19,27 @@ from abc import abstractmethod
 class DbBase(object):
 
     def __init__(self, db_file_name: str):
-        self.__db = None
-        self.__db_file_name = db_file_name
+        self._db = None
+        self._db_file_name = db_file_name
 
     def __del__(self) -> None:
-        self.__db_disconnect()
+        self._db_disconnect()
 
     # ------------------------------------------------------------------------------------------------------------
 
-    def __db_connect(self):
-        if self.db is None:
-            self.db = sqlite3.connect(self.__db_file_name)
+    def _db_connect(self):
+        if self._db is None:
+            self._db = sqlite3.connect(self._db_file_name)
             # self.db.isolation_level = 'EXCLUSIVE'
             # self.db.execute('BEGIN EXCLUSIVE')
-            self.db.row_factory = sqlite3.Row
+            self._db.row_factory = sqlite3.Row
 
-    def __db_disconnect(self) -> None:
-        if self.__db is not None:
-            self.__db.commit()
+    def _db_disconnect(self) -> None:
+        if self._db is not None:
+            self._db.commit()
 
-            self.__db.close()
-            self.__db = None
+            self._db.close()
+            self._db = None
 
     # ------------------------------------------------------------------------------------------------------------
 
@@ -55,9 +55,9 @@ class DbBase(object):
     def create_tables(self) -> None:
         raise NotImplementedError
 
-    def __create_tables(self, queries: typing.List[str]) -> None:
-        self.__db_connect()
-        _ = [self.__db.cursor().execute(query) for query in queries]
+    def _create_tables(self, queries: typing.List[str]) -> None:
+        self._db_connect()
+        _ = [self._db.cursor().execute(query) for query in queries]
 
     # ------------------------------------------------------------------------------------------------------------
 
