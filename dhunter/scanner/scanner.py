@@ -80,7 +80,7 @@ class Scanner(object):
             dir_hash = hm.get_dirhash_for_path(path)
             dir_hash.scan_dir()
 
-    def _cmd_check(self):
+    def _cmd_validate(self):
         # init hash manager singleton
         hm = HashManager.get_instance(self.config.db_file, self.config)
 
@@ -107,7 +107,7 @@ class Scanner(object):
 
             cmds = {
                 Const.CMD_SCAN: self._cmd_scan,
-                Const.CMD_CHECK: self._cmd_check,
+                Const.CMD_VALIDATE: self._cmd_validate,
             }
             if self.config.command in cmds:
                 cmds[self.config.command]()

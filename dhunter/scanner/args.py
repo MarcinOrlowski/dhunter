@@ -32,7 +32,7 @@ class Args(ArgsBase):
         group = parser.add_argument_group('Project')
         group.add_argument('-db', '--db',
                            metavar='DB_FILE', action='store', dest='db_file', nargs=1,
-                           help='Name of project database file to create.')
+                           help='Name of project database file to read and process.')
 
         group.add_argument(
             metavar='DIR', action='store', dest='src_dirs', nargs='+',

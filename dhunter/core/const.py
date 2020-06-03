@@ -42,11 +42,11 @@ class Const(object):
     ]
 
     CMD_SCAN = 'scan'
-    CMD_CHECK = 'check'
+    CMD_VALIDATE = 'validate'
 
     SCANNER_CMDS = [
         CMD_SCAN,
-        CMD_CHECK,
+        CMD_VALIDATE,
     ]
 
     CMD_FILE_HUNT = 'filehunt'

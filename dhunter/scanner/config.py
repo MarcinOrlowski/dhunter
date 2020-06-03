@@ -81,7 +81,7 @@ class Config(ConfigBase):
                 if config.db_file is not None and os.path.exists(config.db_file):
                     Log.abort('Project file already exists: %s' % config.db_file)
 
-            if config.command == Const.CMD_CHECK:
+            if config.command == Const.CMD_VALIDATE:
                 if config.db_file is None:
                     Log.abort('Command %r requires existing project file.')
 
