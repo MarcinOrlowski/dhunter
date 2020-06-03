@@ -74,6 +74,7 @@ class HashManager(object):
             cursor = self._db.cursor()
             cursor.execute('SELECT * FROM `files` where `path` = ?', (dir_path,))
             dh.from_db(cursor.fetchall())
+            self._db_disconnect()
 
         return dh
 
@@ -90,6 +91,7 @@ class HashManager(object):
             cursor.execute('SELECT COUNT(`path`) AS `cnt` FROM `files` where `path` = ? LIMIT 1', (dir_path,))
             if cursor.rowcount() == 1 and cursor.fetchone()[0] >= 1:
                 result = True
+            self._db_disconnect()
 
         return result
 
@@ -116,9 +118,10 @@ class HashManager(object):
 
     def db_init(self) -> None:
         self._db_create_tables()
+        self._db_connect()
 
     def db_cleanup(self) -> None:
-        self.__db_disconnect()
+        self._db_disconnect()
 
     def _db_connect(self) -> None:
         if self._use_db is False:
@@ -132,7 +135,7 @@ class HashManager(object):
 
             self._db.row_factory = sqlite3.Row
 
-    def __db_disconnect(self) -> None:
+    def _db_disconnect(self) -> None:
         if self._db is not None:
             self._db.commit()
 
@@ -143,41 +146,39 @@ class HashManager(object):
         if self._use_db is False:
             return
 
-        create_state_table_query = """
-        CREATE TABLE IF NOT EXISTS `state` (
-            `dirty` INT NOT NULL DEFAULT 0
-            );"""
-
-        create_dirs_table_query = """
-        CREATE TABLE IF NOT EXISTS `dirs` (
-            `path` text NOT NULL DEFAULT ''
-            );"""
-
-        create_files_table_query = """
-        CREATE TABLE IF NOT EXISTS `files` (
-            `path` text NOT NULL DEFAULT '',
-            `name` text NOT NULL DEFAULT '',
-            `hash` text NOT NULL DEFAULT '',
-            `size` INT NOT NULL DEFAULT 0,
-            `mtime` INT NOT NULL DEFAULT 0,
-            `ctime` INT NOT NULL DEFAULT 0,
-            `inode` INT NOT NULL DEFAULT 0
-            );"""
-
         queries = [
-            create_state_table_query,
+            # create_state_table_query
+            """
+            CREATE TABLE IF NOT EXISTS `state` ( 
+                `dirty` INT NOT NULL DEFAULT 0
+            );""",
             'CREATE INDEX IF NOT EXISTS `dirty` ON `state` (`dirty`);',
 
-            create_files_table_query,
+            # create_files_table_query
+            """
+            CREATE TABLE IF NOT EXISTS `files` (
+                `path` text NOT NULL DEFAULT '',
+                `name` text NOT NULL DEFAULT '',
+                `hash` text NOT NULL DEFAULT '',
+                `size` INT NOT NULL DEFAULT 0,
+                `mtime` INT NOT NULL DEFAULT 0,
+                `ctime` INT NOT NULL DEFAULT 0,
+                `inode` INT NOT NULL DEFAULT 0
+            );""",
             'CREATE INDEX IF NOT EXISTS `path` ON `files` (`path`, `name`);',
             'CREATE INDEX IF NOT EXISTS `hash` ON `files` (`hash`);',
 
-            create_dirs_table_query,
+            # create_dirs_table_query
+            """
+            CREATE TABLE IF NOT EXISTS `dirs` (
+               `path` text NOT NULL DEFAULT ''
+            );""",
             'CREATE INDEX IF NOT EXISTS `path` ON `dirs` (`path`);',
         ]
 
         self._db_connect()
         _ = [self._db.cursor().execute(query) for query in queries]
+        self._db_disconnect()
 
     def insert(self, dir_hash: DirHash or None) -> None:
         if self._use_db is False:

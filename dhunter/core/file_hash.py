@@ -282,3 +282,5 @@ class FileHash(HashBase, DbBase):
 
         cur = self._db.cursor()
         cur.execute(sql, vals)
+
+        self._db_disconnect()
