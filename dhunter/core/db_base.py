@@ -23,18 +23,18 @@ class DbBase(object):
         self._db_file_name = db_file_name
 
     def __del__(self) -> None:
-        self._db_disconnect()
+        self.db_disconnect()
 
     # ------------------------------------------------------------------------------------------------------------
 
-    def _db_connect(self):
+    def db_connect(self):
         if self._db is None:
             self._db = sqlite3.connect(self._db_file_name)
             # self.db.isolation_level = 'EXCLUSIVE'
             # self.db.execute('BEGIN EXCLUSIVE')
             self._db.row_factory = sqlite3.Row
 
-    def _db_disconnect(self) -> None:
+    def db_disconnect(self) -> None:
         if self._db is not None:
             self._db.commit()
 
@@ -56,7 +56,7 @@ class DbBase(object):
         raise NotImplementedError
 
     def _create_tables(self, queries: typing.List[str]) -> None:
-        self._db_connect()
+        self.db_connect()
         _ = [self._db.cursor().execute(query) for query in queries]
 
     # ------------------------------------------------------------------------------------------------------------

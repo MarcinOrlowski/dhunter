@@ -274,7 +274,7 @@ class FileHash(HashBase, DbBase):
 
     @overrides(DbBase)
     def replace(self) -> None:
-        self._db_connect()
+        self.db_connect()
 
         sql = 'REPLACE INTO files(`path`,`name`,`hash`,`size`,`mtime`,`ctime`,`inode`) VALUES(?,?,?,?,?,?,?)'
         dir_path = os.path.dirname(self.path)
@@ -283,4 +283,4 @@ class FileHash(HashBase, DbBase):
         cur = self._db.cursor()
         cur.execute(sql, vals)
 
-        self._db_disconnect()
+        self.db_disconnect()
