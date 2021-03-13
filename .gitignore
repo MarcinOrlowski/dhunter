@@ -10,3 +10,4 @@
 /dhunter.egg-info/
 .dhunter
 .dhunterignore
+*.db
